@@ -796,11 +796,11 @@ class MPNN(Model):
     else:
       self.message_functions = [
           message_class(self.hparams)
-          for _ in xrange(self.hparams.num_propagation_steps)
+          for _ in range(self.hparams.num_propagation_steps)
       ]
       self.update_functions = [
           update_class(self.hparams)
-          for _ in xrange(self.hparams.num_propagation_steps)
+          for _ in range(self.hparams.num_propagation_steps)
       ]
 
     self.output_function = output_class(input_dim + self.hparams.node_dim,
@@ -857,7 +857,7 @@ class MPNN(Model):
     # node_dim x node_dim matrix
     h_list = [padded_nodes]
 
-    for i in xrange(self.hparams.num_propagation_steps):
+    for i in range(self.hparams.num_propagation_steps):
       if self.hparams.reuse:
         messages = self.message_functions[0].fprop(
             h_list[-1], adjacency_in, distance, reuse_graph_tensors=(i != 0))

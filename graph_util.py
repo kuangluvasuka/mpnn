@@ -62,7 +62,7 @@ def feed_forward_nn(input_tensor,
 
   h_nn = input_tensor  # first set of "hidden" units is the input
 
-  for i in xrange(num_hidden_layers):
+  for i in range(num_hidden_layers):
     with tf.name_scope("fully_connected/layer{}".format(i + 1)):
       layer_dim = h_nn.get_shape()[1].value
       w = tf.get_variable("W{}".format(i), shape=[layer_dim, hidden_dim])

@@ -80,7 +80,7 @@ class Set2VecTest(tf.test.TestCase):
       # Permute the masks and inputs for each element in the batch.
       # We create separate permutation for each element in order to make the
       # test more general.
-      for i in xrange(batch_size):
+      for i in range(batch_size):
         perm = np.random.permutation(mask_np_pad.shape[1])
         mask_np_pad[i, :] = tmp_mask_pad[i, perm]
         input_np_pad[i, :] = tmp_input_pad[i, perm]

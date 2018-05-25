@@ -48,17 +48,17 @@ def get_permutation_test_outputs(hparams):
     dist_perm = np.zeros_like(dist)
     m = np.full((batch_size, num_nodes), 1)
 
-    for i in xrange(len(h_perm)):
+    for i in range(len(h_perm)):
       h_perm[i] = h[i][perm]
-    for i in xrange(len(adjacency_perm)):
+    for i in range(len(adjacency_perm)):
       adjacency_perm[i] = adjacency[i][perm]
       dist_perm[i] = dist[i][perm]
-      for j in xrange(len(adjacency_perm[i])):
+      for j in range(len(adjacency_perm[i])):
         adjacency_perm[i][j] = adjacency_perm[i][j][perm]
         dist_perm[i][j] = dist_perm[i][j][perm]
 
-    print h.shape, h_perm.shape
-    print adjacency.shape, adjacency_perm.shape
+    print(h.shape, h_perm.shape)
+    print(adjacency.shape, adjacency_perm.shape)
 
     with tf.Session() as sess:
       sess.run(tf.global_variables_initializer())
@@ -67,10 +67,10 @@ def get_permutation_test_outputs(hparams):
       output_perm = sess.run(
           pred_op,
           feed_dict=build_feed_dict(ph, h_perm, adjacency_perm, dist_perm, m))
-      print "output no perm:"
-      print output
-      print "\noutput perm:"
-      print output_perm
+      print("output no perm:")
+      print(output)
+      print("\noutput perm:")
+      print(output_perm)
       return output, output_perm
 
 
@@ -103,17 +103,17 @@ def get_pad_test_outputs(hparams):
                          dist.shape[2] + pad))
     m_pad = np.zeros((batch_size, num_nodes + pad))
 
-    for i in xrange(batch_size):
-      for j in xrange(num_nodes):
+    for i in range(batch_size):
+      for j in range(num_nodes):
         m_pad[i][j] = 1
-    for i in xrange(len(h)):
-      for j in xrange(len(h[i])):
-        for k in xrange(len(h[i][j])):
+    for i in range(len(h)):
+      for j in range(len(h[i])):
+        for k in range(len(h[i][j])):
           h_pad[i][j][k] = h[i][j][k]
 
-    for i in xrange(len(adjacency)):
-      for j in xrange(len(adjacency[i])):
-        for k in xrange(len(adjacency[i][j])):
+    for i in range(len(adjacency)):
+      for j in range(len(adjacency[i])):
+        for k in range(len(adjacency[i][j])):
           adjacency_pad[i][j][k] = adjacency[i][j][k]
           dist_pad[i][j][k] = dist[i][j][k]
 
@@ -125,10 +125,10 @@ def get_pad_test_outputs(hparams):
           pred_op,
           feed_dict=build_feed_dict(ph, h_pad, adjacency_pad, dist_pad, m_pad))
 
-      print "output no pad:"
-      print output
-      print "\noutput pad:"
-      print output_pad
+      print("output no pad:")
+      print(output)
+      print("\noutput pad:")
+      print(output_pad)
 
       return output, output_pad
 
@@ -153,7 +153,7 @@ class MPNNTest(tf.test.TestCase):
       ph, _ = model.get_fprop_placeholders()
       ph2, _ = model.get_fprop_placeholders()
 
-      print ph[0], ph2[0]
+      print(ph[0], ph2[0])
 
       pred = model.fprop(*ph, train=True)
       pred2 = model.fprop(*ph2)
@@ -169,7 +169,7 @@ class MPNNTest(tf.test.TestCase):
     self.assertListEqual(list(pred1.shape), [batch_size, output_dim])
     self.assertListEqual(list(pred2.shape), [batch_size, output_dim])
     self.assertAllClose(pred1, pred2)
-    print "Successfully constructed MPNN graph."
+    print("Successfully constructed MPNN graph.")
 
   def test_permutation_and_pad_invariance(self):
     # test GG-NN msg pass + graph level output
